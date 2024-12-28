@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(
+      135deg,
+      rgba(0, 102, 204, 0.8),
+      rgba(0, 204, 255, 0.8)
+    ),
+    url("/public/OIP.jpeg") center/cover no-repeat;
+
+  color: white;
+}
