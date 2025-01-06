@@ -2,7 +2,6 @@ import { useState } from "react"
 import { Route, Routes } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import HomePage from "../pages/HomePage";
-import './TableauDeBord.css'
 import Settings from "../pages/Settings";
 
 export default function TableauDeBord(props){
