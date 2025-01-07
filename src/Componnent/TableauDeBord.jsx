@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import HomePage from "../pages/HomePage";
 import Settings from "../pages/Settings";
+import AfficherEmplois from "./VisualisationEmploi/AfficherEmplois";
 
 export default function TableauDeBord(props){
     const [user, setUser] = useState(props.user)
@@ -18,6 +19,7 @@ export default function TableauDeBord(props){
         <Sidebar user={user}/>
         <Routes>
             <Route path="/" element={<HomePage/>}/>
+            <Route path="/visualisation-emploi" element={<AfficherEmplois/>}/>
             <Route path="/settings/*" element={<Settings user={user}/>}/>
         </Routes>
       </div> 
