@@ -2,13 +2,13 @@ import React from 'react';
 import Header from '../Componnent/comon/Header';
 import { motion } from 'framer-motion';
 import UpdateUser from '../Componnent/Settings/UpdateUser';
-import { Routes, Route} from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import AfficherInformations from '../Componnent/Settings/AfficherInformations';
 
 export default function Settings(props) {
 
   return (
-    <div className='flex-1 overflow-auto relative z-10'>
+    <div className="flex-1 overflow-auto relative z-10 bg-gray-50 p-4">
       <Header title="Paramètres" />
 
       <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8 xl:px-20"> </main>
