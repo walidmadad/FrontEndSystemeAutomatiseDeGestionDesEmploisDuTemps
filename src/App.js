@@ -12,13 +12,20 @@ const App = () => {
         setIsLogged(true);
     };
 
+    const handleLogout = () => {
+        setIsLogged(false);
+        setUser({});
+        console.log('Déconnexion réussie');
+    };
+    
+
     return (
         <>
             
             {isLogged ? (
-                <TableauDeBord user={user} />
+                <TableauDeBord user={user} onLogout={handleLogout}/>
             ) : (
-                <div className="app-container">
+                <div className="app-container flex justify-center items-center text-white">
                     <Login onLogin={handleLogin} />
                 </div>
             )}
