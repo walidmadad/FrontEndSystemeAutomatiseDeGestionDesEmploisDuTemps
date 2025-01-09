@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import Settings from "../pages/Settings";
 import AfficherEmplois from "./VisualisationEmploi/AfficherEmplois";
 import GestionUtilisateur from "./GestionUtilisateur/GestionUtilisateur";
+import AjouterCours from "./AjouterCours/AjouterCours";
 
 export default function TableauDeBord({ user, onLogout }) {
     return (
@@ -19,6 +20,7 @@ export default function TableauDeBord({ user, onLogout }) {
                 <Route path="/visualisation-emploi" element={<AfficherEmplois />} />
                 <Route path="/gestion-utilisateur" element={<GestionUtilisateur />} />
                 <Route path="/settings/*" element={<Settings user={user} />} />
+                <Route path="/ajouter-cours" element={<AjouterCours/>}/>
             </Routes>
         </div>
     );
