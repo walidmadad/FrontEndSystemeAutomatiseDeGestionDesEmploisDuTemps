@@ -8,7 +8,7 @@ const SIDEBAR_ITEMS = [
     { name: "Gestion des Utilisateurs", icon: Users, color: "#1E8449", path: "/gestion-utilisateur" },
     { name: "Gestion des Matières", icon: Book, color: "#B9770E", path: "/" },
     { name: "Gestion des Salles", icon: School, color: "#943126", path: "/" },
-    { name: "Création des Emplois du Temps", icon: Calendar, color: "#76448A", path: "/" },
+    { name: "Création des Emplois du Temps", icon: Calendar, color: "#76448A", path: "/ajouter-cours" },
     { name: "Visualisation des Emplois du Temps", icon: CalendarSearch, color: "#7D6608", path: "/visualisation-emploi" },
     { name: "Notifications", icon: Bell, color: "#7D6608", path: "/" },
     { name: "Paramètres", icon: Settings, color: "#5D6D7E", path: "/settings" },
