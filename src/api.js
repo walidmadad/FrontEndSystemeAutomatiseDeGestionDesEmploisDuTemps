@@ -27,8 +27,8 @@ export const fetchAllUtilisateurs = async () => {
   
 export const addAdmin = async (admin) => {
     try {
+      console.log(admin)
       const response = await axios.post(`${API_URL}utilisateurs/admin/add`, admin);
-      console.log(response.data)
       return response.data;
     } catch (error) {
       throw new Error('Erreur lors de l\'ajout de l\'Admin.');
@@ -37,8 +37,8 @@ export const addAdmin = async (admin) => {
   
 export const addEnseignant = async (enseignant) => {
     try {
+      console.log(enseignant)
       const response = await axios.post(`${API_URL}utilisateurs/enseignant/add`, enseignant);
-      console.log(response.data)
       return response.data;
     } catch (error) {
       throw new Error('Erreur lors de l\'ajout de l\'enseignant.');
@@ -73,3 +73,11 @@ export const deleteUtilisateur = async (id) => {
 
   }
  };
+ export const fetchAllSalles = async() => {
+    try{
+        const response = await axios.get(`${API_URL}salles/all`);
+        return response.data.data;
+    }catch(err){
+        throw new Error('Erreur lors de recuperation des salles');
+    }
+ }
