@@ -19,9 +19,12 @@ export default function AjouterCours() {
         salle: {
             id : 0
         },
-        enseignant: {
+        matiere: {
             id : 0
           },
+        formation : {
+            id : 0
+        },
         dateNaissance: '',
         dateEntree:''
       });
@@ -75,9 +78,17 @@ export default function AjouterCours() {
                 className="bg-white shadow-lg rounded-lg p-6 max-w-3xl mx-auto border border-gray-200"
                 
               >
+                {error && (
+                  <div className="bg-red-100 text-red-700 p-4 rounded mb-4">
+                    <p>Erreur : {error}</p>
+                  </div>
+                )}
+                {loading ? (
+                <p className="text-center text-gray-500">Chargement en cours...</p>
+                ) :(
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   
-
+                
                   {/* Salle */}
                   <div>
                     <label htmlFor="salle" className="block text-sm font-medium text-gray-700">
@@ -197,9 +208,10 @@ export default function AjouterCours() {
                       required
                     />
                   </div>
+                
 
                 </div>
-            
+                )}
                 {/* Bouton de soumission */}
                 <div className="mt-6">
                   <button
