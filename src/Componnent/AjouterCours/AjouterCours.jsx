@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../comon/Header'
-import { fetchAllSalles, fetchAllUtilisateurs } from '../../api';
+import { fetchAllSalles, fetchAllUtilisateurs, fetchAllFormations } from '../../api';
 
 export default function AjouterCours() {
     const [enseignants, setEnseignants] = useState([]);
-    const [salles, SetSalles] = useState([]);
+    const [salles, setSalles] = useState([]);
+    const [formations, setFormations] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [cours, setCours] = useState({
@@ -43,11 +44,22 @@ export default function AjouterCours() {
           }
         });
       };
+    const loadFormations = async () => {
+      setLoading(true);
+      try{
+          const formationsData = await fetchAllFormations();
+          setFormations(formationsData);
+      }catch(err){
+          setError(err.message);
+      }finally{
+        setLoading(false);
+      }
+    }
     const loadSalles = async () => {
         setLoading(true);
         try{
             const sallesData = await fetchAllSalles();
-            SetSalles(sallesData);
+            setSalles(sallesData);
         }catch(err){
             setError(err.message);
         } finally{
@@ -70,6 +82,7 @@ export default function AjouterCours() {
     useEffect(()=>{
         loadSalles();
         loadUtilisateurs();
+        loadFormations();
     },[])
   return (
     <div className='flex-1 overflow-auto relative z-10'>
@@ -164,9 +177,9 @@ export default function AjouterCours() {
                       <option value="" >
                         Sélectionnez une formation
                       </option>
-                      {enseignants.map((enseignant) => (
-                        <option key={enseignant.id} value={enseignant.id}>
-                          {enseignant.nom} {enseignant.prenom}
+                      {formations.map((formation) => (
+                        <option key={formation.id} value={formation.id}>
+                          {formation.niveau.nom} {formation.nom} 
                         </option>
                       ))}
                     </select>
