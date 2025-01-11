@@ -118,7 +118,7 @@ export default function AjouterCours() {
                       </option>
                       {salles.map((salle) => (
                         <option key={salle.id} value={salle.id}>
-                          {salle.nom} {salle.tyepSalle} {salle.capacite}
+                          Nom: {salle.nom} | Type de Salle: {salle.typeSalle} | Capacité: {salle.capacite}
                         </option>
                       ))}
                     </select>
