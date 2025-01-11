@@ -81,3 +81,11 @@ export const deleteUtilisateur = async (id) => {
         throw new Error('Erreur lors de recuperation des salles');
     }
  }
+ export const fetchAllFormations = async() => {
+    try{
+      const response = await axios.get(`${API_URL}formations/all`);
+      return response.data.data;
+    }catch(err){
+      throw new Error('Erreur lors de la recuperation des formations');
+    }
+ }
