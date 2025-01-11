@@ -199,11 +199,7 @@ export default function AjouterCours() {
                       <option value="" >
                         Sélectionnez une matière
                       </option>
-                      {enseignants.map((enseignant) => (
-                        <option key={enseignant.id} value={enseignant.id}>
-                          {enseignant.nom} {enseignant.prenom}
-                        </option>
-                      ))}
+                      
                     </select>
                   </div>
             
