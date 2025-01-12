@@ -89,3 +89,12 @@ export const deleteUtilisateur = async (id) => {
       throw new Error('Erreur lors de la recuperation des formations');
     }
  }
+
+ export const fetchAllMatieres = async() => {
+  try{
+    const response = await axios.get(`${API_URL}matieres/all`);
+    return response.data.data;
+  }catch(err){
+    throw new Error('Erreur lors de la recuperation des matieres');
+  }
+ } 
