@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../comon/Header'
-import { fetchAllSalles, fetchAllUtilisateurs, fetchAllFormations } from '../../api';
+import { fetchAllSalles, fetchAllUtilisateurs, fetchAllFormations, fetchAllMatieres } from '../../api';
 
 export default function AjouterCours() {
     const [enseignants, setEnseignants] = useState([]);
     const [salles, setSalles] = useState([]);
     const [formations, setFormations] = useState([]);
+    const [matieres, setMatieres] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [cours, setCours] = useState({
@@ -38,6 +39,13 @@ export default function AjouterCours() {
               departement: value,
             }
           }
+          if(field === "formation"){
+            loadMatieres(value.id);
+            return{
+              ...prevUser,
+              formation : value,
+            }
+          }
           return{
             ...prevUser,
             [field]: value,
@@ -51,6 +59,19 @@ export default function AjouterCours() {
           setFormations(formationsData);
       }catch(err){
           setError(err.message);
+      }finally{
+        setLoading(false);
+      }
+    }
+    const loadMatieres = async(idFormation) => {
+      setLoading(true);
+      try{
+        const matieresData = await fetchAllMatieres();
+        const matieresByFormations = matieresData.filter((matiere) => matiere.formation.id === idFormation) 
+        console.log(matieresByFormations)
+        setMatieres(matieresByFormations);
+      }catch(err){
+        setError(err.message);
       }finally{
         setLoading(false);
       }
@@ -80,9 +101,12 @@ export default function AjouterCours() {
         }
       };
     useEffect(()=>{
+
         loadSalles();
         loadUtilisateurs();
         loadFormations();
+
+            
     },[])
   return (
     <div className='flex-1 overflow-auto relative z-10'>
@@ -170,6 +194,7 @@ export default function AjouterCours() {
                     </label>
                     <select
                       id="formation"
+                      value={cours.formation.id}
                       onChange={(e) => handleInputChange('formation', { id: parseInt(e.target.value, 10) })}
                       className="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                       required
@@ -199,6 +224,9 @@ export default function AjouterCours() {
                       <option value="" >
                         Sélectionnez une matière
                       </option>
+                      {matieres.map((matiere) => (
+                        <option key={matiere.id} value={matiere.id}>{matiere.nom}</option>
+                      ))}
                       
                     </select>
                   </div>
