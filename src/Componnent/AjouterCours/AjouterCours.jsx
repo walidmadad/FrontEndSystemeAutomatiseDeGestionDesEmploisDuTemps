@@ -123,8 +123,29 @@ export default function AjouterCours() {
                 {loading ? (
                 <p className="text-center text-gray-500">Chargement en cours...</p>
                 ) :(
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6">
                   
+                  {/* Enseignant */}
+                  <div>
+                    <label htmlFor="enseignant" className="block text-sm font-medium text-gray-700">
+                      Enseignant :
+                    </label>
+                    <select
+                      id="enseignant"
+                      onChange={(e) => handleInputChange('enseignant', { id: parseInt(e.target.value, 10) })}
+                      className="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                      required
+                    >
+                      <option value="" >
+                        Sélectionnez un enseignant
+                      </option>
+                      {enseignants.map((enseignant) => (
+                        <option key={enseignant.id} value={enseignant.id}>
+                          {enseignant.nom} {enseignant.prenom}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 
                   {/* Salle */}
                   <div>
@@ -165,27 +186,7 @@ export default function AjouterCours() {
                     </select>
                   </div>
             
-                  {/* Enseignant */}
-                  <div>
-                    <label htmlFor="enseignant" className="block text-sm font-medium text-gray-700">
-                      Enseignant :
-                    </label>
-                    <select
-                      id="enseignant"
-                      onChange={(e) => handleInputChange('enseignant', { id: parseInt(e.target.value, 10) })}
-                      className="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                      required
-                    >
-                      <option value="" >
-                        Sélectionnez un enseignant
-                      </option>
-                      {enseignants.map((enseignant) => (
-                        <option key={enseignant.id} value={enseignant.id}>
-                          {enseignant.nom} {enseignant.prenom}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                  
             
                   {/* Formation */}
                   <div>
@@ -231,16 +232,46 @@ export default function AjouterCours() {
                     </select>
                   </div>
             
-                  {/* Date de naissance */}
+                  {/* Jour de cours */}
                   <div>
-                    <label htmlFor="dateDeNaissance" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="jour" className="block text-sm font-medium text-gray-700">
                       Jour de cours :
                     </label>
                     <input
                       id="jour"
-                      type="datetime-local"
+                      type="date"
                       value={cours.jour}
                       onChange={(e) => handleInputChange('jour', e.target.value)}
+                      className="mt-1 block w-full rounded-md border-gray-300  shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                      required
+                    />
+                  </div>
+
+                   {/* DEBUT */}
+                   <div>
+                    <label htmlFor="debutDeCours" className="block text-sm font-medium text-gray-700">
+                      Debut de cours :
+                    </label>
+                    <input
+                      id="debutDeCours"
+                      type="time"
+                      value={cours.jour}
+                      onChange={(e) => handleInputChange('debutDeCours', e.target.value)}
+                      className="mt-1 block w-full rounded-md border-gray-300  shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                      required
+                    />
+                  </div>
+
+                   {/* FIN */}
+                   <div>
+                    <label htmlFor="finDeCours" className="block text-sm font-medium text-gray-700">
+                      fin de cours :
+                    </label>
+                    <input
+                      id="finDeCours"
+                      type="time"
+                      value={cours.jour}
+                      onChange={(e) => handleInputChange('finDeCours', e.target.value)}
                       className="mt-1 block w-full rounded-md border-gray-300  shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                       required
                     />
