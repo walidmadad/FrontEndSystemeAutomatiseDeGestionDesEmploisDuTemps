@@ -10,11 +10,6 @@ export default function AjouterCours() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [cours, setCours] = useState({
-        nom: '',
-        prenom: '',
-        email: '',
-        motDePasse: '',
-        telephone: '',
         enseignant: {
           id : 0
         },
