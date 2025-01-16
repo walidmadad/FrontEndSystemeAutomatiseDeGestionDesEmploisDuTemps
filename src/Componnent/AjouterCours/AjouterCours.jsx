@@ -22,8 +22,9 @@ export default function AjouterCours() {
         formation : {
             id : 0
         },
-        dateNaissance: '',
-        dateEntree:''
+        jour: '',
+        heureDebut: '',
+        heureFin:''
       });
     
     const handleInputChange = (field, value) => {
