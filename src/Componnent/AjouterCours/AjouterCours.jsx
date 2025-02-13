@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import Header from '../comon/Header'
 import { fetchAllSalles, fetchAllUtilisateurs, fetchAllFormations, fetchAllMatieres, fetchUtilisateursByName, addCours } from '../../api';
 
@@ -30,17 +30,15 @@ export default function AjouterCours() {
         typeDeCours: '',
       });
     
-      const handleInputChange = (field, value) => {
-        setCours((prevCours) => {
-            const updatedCours = { ...prevCours, [field]: value };
-
-            if (field === "formation") {
-                loadMatieres(value.id);
-            }
-
-            return updatedCours;
-        });
-    };
+    const handleInputChange = useCallback((field, value) => {
+      setCours((prevCours) => {
+          const updatedCours = { ...prevCours, [field]: value };
+          if (field === "formation") {
+              loadMatieres(value.id);
+          }
+          return updatedCours;
+      });
+    }, []);
     const loadFormations = async () => {
       setLoading(true);
       try{
@@ -108,8 +106,28 @@ export default function AjouterCours() {
         try{
           const data = await addCours(cours);
           setMessage(data.message)
+          setError(null)
+          setCours({
+            enseignant: {
+              id : 0
+            },
+            salle: {
+              id : 0
+            },
+            matiere: {
+              id : 0
+              },
+            formation : {
+              id : 0
+            },
+            dateDeCours: '',
+            debutDeCours: '',
+            finDeCours:'',
+            typeDeCours: '',
+          })
         }catch(err){
           setError(err.message)
+          setMessage(null)
         }
         
       }
@@ -125,11 +143,8 @@ export default function AjouterCours() {
     <div className='flex-1 overflow-auto relative z-10'>
         <Header title="Ajouter Cours"/>
         <div className="bg-white shadow-lg rounded-lg p-6 max-w-3xl mx-auto border border-gray-200">
-                {error && (
-                  <div className="bg-red-100 text-red-700 p-4 rounded mb-4">
-                    <p>Erreur : {error}</p>
-                  </div>
-                )}
+                {error && <div className="bg-red-100 text-red-700 p-4 rounded mb-4">Erreur : {error}</div>}
+                {message && <div className="bg-green-100 text-green-700 p-4 rounded mb-4">{message}</div>}
                 {loading ? (
                 <p className="text-center text-gray-500">Chargement en cours...</p>
                 ) :(
