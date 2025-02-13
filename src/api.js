@@ -107,3 +107,12 @@ export const deleteUtilisateur = async (id) => {
     throw new Error('Erreur lors de la recuperation des matieres');
   }
  } 
+
+export const addCours = async (cours) => {
+  try{
+    const response = await axios.post(`${API_URL}cours/add`, cours);
+    return response.data;
+  }catch(err){
+    throw new Error('Erreur lors de la créationde cours');
+  }
+}
