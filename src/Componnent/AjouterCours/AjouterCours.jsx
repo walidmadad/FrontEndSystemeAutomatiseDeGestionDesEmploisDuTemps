@@ -105,6 +105,12 @@ export default function AjouterCours() {
 
       const handleSubmit = async(e) => {
         e.preventDefault();
+        try{
+          const data = await addCours(cours);
+          setMessage(data.message)
+        }catch(err){
+          setError(err.message)
+        }
         
       }
 
