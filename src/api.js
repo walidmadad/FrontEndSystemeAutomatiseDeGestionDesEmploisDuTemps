@@ -113,6 +113,15 @@ export const addCours = async (cours) => {
     const response = await axios.post(`${API_URL}cours/add`, cours);
     return response.data;
   }catch(err){
-    throw new Error('Erreur lors de la créationde cours');
+    throw new Error('Erreur lors de la création de cours');
+  }
+}
+
+export const fetchAllCoursByEnseignant = async(id) => {
+  try{
+    const response = await axios.get(`${API_URL}cours/coursByEnseignant/${id}`);
+    return response.data.data;
+  }catch(err){
+    throw new Error('Erreur lors de la récuperation des cours');
   }
 }
