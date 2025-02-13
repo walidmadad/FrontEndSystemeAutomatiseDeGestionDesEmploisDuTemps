@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:9191/api/v1/';
+const API_URL = 'http://172.20.10.2:9191/api/v1/';
 
 export const verifierConnexion = async (email, motDePasse, userType) => {
     try {
@@ -24,6 +24,15 @@ export const fetchAllUtilisateurs = async () => {
       throw new Error('Erreur lors de la récupération des utilisateurs.');
     }
   };
+
+export const fetchUtilisateursByName = async (name) => {
+    try{ 
+        const response = await axios.get(`${API_URL}utilisateurs/enseignant/nom/${name}`);
+        return response.data.data;
+    }catch (error){
+        throw new Error('Erreur lors de la récupérations des utilisateurs.');
+    }
+};
   
 export const addAdmin = async (admin) => {
     try {
