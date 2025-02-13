@@ -1,53 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../comon/Header'
-import { fetchAllSalles, fetchAllUtilisateurs, fetchAllFormations, fetchAllMatieres } from '../../api';
+import { fetchAllSalles, fetchAllUtilisateurs, fetchAllFormations, fetchAllMatieres, fetchUtilisateursByName, addCours } from '../../api';
 
 export default function AjouterCours() {
     const [enseignants, setEnseignants] = useState([]);
+    const [nomEnseignant, setNomEnseignant] = useState("");
     const [salles, setSalles] = useState([]);
     const [formations, setFormations] = useState([]);
     const [matieres, setMatieres] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [message, setMessage] = useState(null);
     const [cours, setCours] = useState({
         enseignant: {
           id : 0
         },
         salle: {
-            id : 0
+          id : 0
         },
         matiere: {
-            id : 0
+          id : 0
           },
         formation : {
-            id : 0
+          id : 0
         },
-        jour: '',
-        heureDebut: '',
-        heureFin:''
+        dateDeCours: '',
+        debutDeCours: '',
+        finDeCours:'',
+        typeDeCours: '',
       });
     
-    const handleInputChange = (field, value) => {
-        setCours((prevUser) => {
-          if(field === "departement"){
-            return{
-              ...prevUser,
-              departement: value,
+      const handleInputChange = (field, value) => {
+        setCours((prevCours) => {
+            const updatedCours = { ...prevCours, [field]: value };
+
+            if (field === "formation") {
+                loadMatieres(value.id);
             }
-          }
-          if(field === "formation"){
-            loadMatieres(value.id);
-            return{
-              ...prevUser,
-              formation : value,
-            }
-          }
-          return{
-            ...prevUser,
-            [field]: value,
-          }
+
+            return updatedCours;
         });
-      };
+    };
     const loadFormations = async () => {
       setLoading(true);
       try{
@@ -85,32 +78,47 @@ export default function AjouterCours() {
     }
     const loadUtilisateurs = async () => {
         setLoading(true);
-        try {
-          const utilisateursData = await fetchAllUtilisateurs();
-          const enseignants = utilisateursData.filter((utilisateur) => utilisateur.userType !== "ADMIN")
-          setEnseignants(enseignants);
+        if (nomEnseignant === ""){
+          try {
+            const utilisateursData = await fetchAllUtilisateurs();
+            const enseignants = utilisateursData.filter((utilisateur) => utilisateur.userType !== "ADMIN")
+            setEnseignants(enseignants);
 
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
+          } catch (err) {
+            setError(err.message);
+          } finally {
+            setLoading(false);
+          }
+        }else{
+          try{
+            const utilisateursData = await fetchUtilisateursByName(nomEnseignant)
+            const enseignants = utilisateursData;
+            setEnseignants(enseignants);
+          }catch(err){
+            setError(err.message)
+          }finally{
+            setLoading(false)
+          }
+          
         }
       };
+
+      const handleSubmit = async(e) => {
+        e.preventDefault();
+        
+      }
+
     useEffect(()=>{
 
-        loadSalles();
-        loadUtilisateurs();
-        loadFormations();
-
+      loadSalles();
+      loadUtilisateurs();
+      loadFormations();
             
     },[])
   return (
     <div className='flex-1 overflow-auto relative z-10'>
         <Header title="Ajouter Cours"/>
-        <form
-                className="bg-white shadow-lg rounded-lg p-6 max-w-3xl mx-auto border border-gray-200"
-                
-              >
+        <div className="bg-white shadow-lg rounded-lg p-6 max-w-3xl mx-auto border border-gray-200">
                 {error && (
                   <div className="bg-red-100 text-red-700 p-4 rounded mb-4">
                     <p>Erreur : {error}</p>
@@ -122,6 +130,21 @@ export default function AjouterCours() {
                 <div className="grid grid-cols-1 gap-6">
                   
                   {/* Enseignant */}
+                  <div>
+                    <label className='text-sm font-medium text-gray-700'>Nom Enseignant : </label>
+                    <input className='ml-2 border rounded-md border-gray-300 bg-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500'
+                     value={nomEnseignant}
+                     onChange={(e) => {
+                      setNomEnseignant(e.target.value)
+                     }}></input>
+                     <button onClick={ () => {
+                      loadUtilisateurs()
+                     }} 
+                     disabled={nomEnseignant === "" ? "disabled" : ""}
+                     className=' bg-blue-500 ml-4 text-white font-semibold py-1 px-4 border rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 disabled:bg-gray-400'
+                     >Rechercher</button>
+                  </div>
+
                   <div>
                     <label htmlFor="enseignant" className="block text-sm font-medium text-gray-700">
                       Enseignant :
@@ -167,11 +190,11 @@ export default function AjouterCours() {
           
                   {/* Type de cours */}
                   <div>
-                    <label htmlFor="typedecours" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="typeDeCours" className="block text-sm font-medium text-gray-700">
                       Type de Cours :
                     </label>
-                    <select id="typedecours"
-                      onChange={(e) => handleInputChange('typedecours', e.target.value)}
+                    <select id="typeDeCours"
+                      onChange={(e) => handleInputChange('typeDeCours', e.target.value)}
                       className="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="" >
                         Sélectionnez Type de Cours
@@ -230,14 +253,14 @@ export default function AjouterCours() {
             
                   {/* Jour de cours */}
                   <div>
-                    <label htmlFor="jour" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="dateDeCours" className="block text-sm font-medium text-gray-700">
                       Jour de cours :
                     </label>
                     <input
-                      id="jour"
+                      id="dateDeCours"
                       type="date"
-                      value={cours.jour}
-                      onChange={(e) => handleInputChange('jour', e.target.value)}
+                      value={cours.dateDeCours}
+                      onChange={(e) => handleInputChange('dateDeCours', e.target.value)}
                       className="mt-1 block w-full rounded-md border-gray-300  shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                       required
                     />
@@ -251,7 +274,7 @@ export default function AjouterCours() {
                     <input
                       id="debutDeCours"
                       type="time"
-                      value={cours.jour}
+                      value={cours.debutDeCours}
                       onChange={(e) => handleInputChange('debutDeCours', e.target.value)}
                       className="mt-1 block w-full rounded-md border-gray-300  shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                       required
@@ -266,7 +289,7 @@ export default function AjouterCours() {
                     <input
                       id="finDeCours"
                       type="time"
-                      value={cours.jour}
+                      value={cours.finDeCours}
                       onChange={(e) => handleInputChange('finDeCours', e.target.value)}
                       className="mt-1 block w-full rounded-md border-gray-300  shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                       required
@@ -281,11 +304,12 @@ export default function AjouterCours() {
                   <button
                     type="submit"
                     className="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 focus:ring-2 focus:ring-blue-600 focus:ring-offset-2"
+                    onClick={handleSubmit}
                   >
                     Ajouter
                   </button>
                 </div>
-              </form>
+          </div>
     </div>
   )
 }
