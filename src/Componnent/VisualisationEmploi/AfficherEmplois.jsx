@@ -1,49 +1,88 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../comon/Header';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css'; // Styles du calendrier
+import { fetchAllCoursByEnseignant, fetchAllUtilisateurs, fetchUtilisateursByName } from '../../api';
 
 // Initialisation de moment pour la localisation des dates
 const localizer = momentLocalizer(moment);
 
-// Exemple d'événements par enseignant
-const allEvents = {
-  prof1: [
-    {
-      title: 'Cours de Mathématiques',
-      start: new Date(2025, 0, 6, 9, 0),
-      end: new Date(2025, 0, 6, 11, 0),
-    },
-    {
-      title: 'Cours de Physique',
-      start: new Date(2025, 0, 8, 10, 0),
-      end: new Date(2025, 0, 8, 12, 0),
-    },
-  ],
-  prof2: [
-    {
-      title: 'Réunion de projet',
-      start: new Date(2025, 0, 7, 14, 0),
-      end: new Date(2025, 0, 7, 15, 30),
-    },
-    {
-      title: 'Cours de Chimie',
-      start: new Date(2025, 0, 9, 8, 30),
-      end: new Date(2025, 0, 9, 10, 30),
-    },
-  ],
-};
 
 export default function AfficherEmplois() {
-  const [selectedProf, setSelectedProf] = useState(''); // État pour l'enseignant sélectionné
   const [events, setEvents] = useState([]); // État des événements filtrés
+  const [enseignants, setEnseignants] = useState([]);
+  const [nomEnseignant, setNomEnseignant] = useState("");
+  const [cours, setCours] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
+
+  const loadUtilisateurs = async () => {
+          setLoading(true);
+          if (nomEnseignant === ""){
+            try {
+              const utilisateursData = await fetchAllUtilisateurs();
+              const enseignants = utilisateursData.filter((utilisateur) => utilisateur.userType !== "ADMIN")
+              setEnseignants(enseignants);
+  
+            } catch (err) {
+              setError(err.message);
+            } finally {
+              setLoading(false);
+            }
+          }else{
+            try{
+              const utilisateursData = await fetchUtilisateursByName(nomEnseignant)
+              const enseignants = utilisateursData;
+              setEnseignants(enseignants);
+            }catch(err){
+              setError(err.message)
+            }finally{
+              setLoading(false)
+            }
+            
+          }
+        };
+
+  const loadCours = async (id) => {
+    setLoading(true);
+    try{
+      const data = await fetchAllCoursByEnseignant(id);
+      console.log(data)
+      setCours(data);
+
+      const events = transformCoursToEvents(data);
+      setEvents(events)
+    }catch(err){
+      setError(err.message)
+    }finally {
+      setLoading(false);
+    }
+  }
+
+  const transformCoursToEvents = (cours) => {
+    return cours.map((coursItem) => {
+      const startDate = new Date(`${coursItem.dateDeCours}T${coursItem.debutDeCours}`);
+      const endDate = new Date(`${coursItem.dateDeCours}T${coursItem.finDeCours}`);
+  
+      return {
+        title: `${coursItem.matiere.nom} (${coursItem.typeDeCours}) - ${coursItem.salle.nom} - ${coursItem.formation.nom}`,
+        start: startDate,
+        end: endDate,
+        colorEvento:'green',
+      };
+    });
+  };
+  
+  useEffect(() =>{
+      loadUtilisateurs();
+    },[])
 
   // Fonction pour gérer le changement d'enseignant
   const handleSelectChange = (e) => {
     const prof = e.target.value;
-    setSelectedProf(prof);
-    setEvents(allEvents[prof] || []);
+    loadCours(prof)
   };
 
   return (
@@ -59,13 +98,14 @@ export default function AfficherEmplois() {
           </label>
           <select
             id="profSelect"
-            value={selectedProf}
             onChange={handleSelectChange}
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="">Veuillez sélectionner un enseignant</option>
-            <option value="prof1">Professeur 1</option>
-            <option value="prof2">Professeur 2</option>
+            {enseignants.map((enseignant) => (
+              <option value={enseignant.id} key={enseignant.id}>{enseignant.nom} {enseignant.prenom}</option>
+            ))}
+            
           </select>
         </div>
 
