@@ -28,7 +28,7 @@ export default function Sidebar({ user, onLogout }) {
     return (
         <motion.div
             className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${isSidebarOpen ? 'w-64' : 'w-20'} sm:w-16 md:w-64`}
-            animate={{ width: isSidebarOpen ? 300 : 80 }}
+            animate={{ width: isSidebarOpen ? 300 : 100 }}
         >
             <div className="h-full bg-slate-100 bg-opacity-50 backdrop-blur-md p-4 flex flex-col border-r border-slate-100">
                 <div className="px-2 rounded-full hover:bg-slate-200 transition-colors max-w-fit whitespace-break-spaces">
