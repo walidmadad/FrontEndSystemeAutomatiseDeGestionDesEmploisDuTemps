@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://172.20.10.2:9191/api/v1/';
+const API_URL = 'http://localhost:9191/api/v1/';
 
 export const verifierConnexion = async (email, motDePasse, userType) => {
     try {
