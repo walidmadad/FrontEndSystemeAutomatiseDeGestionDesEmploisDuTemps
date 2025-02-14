@@ -3,13 +3,20 @@ import { useState } from "react";
 import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from "react-router";
 
-const SIDEBAR_ITEMS = [
+const SIDEBAR_ITEMS_ADMIN = [
     { name: "Tableau de board", icon: LayoutDashboard, color: "#2C3E50", path: "/" },
     { name: "Gestion des Utilisateurs", icon: Users, color: "#1E8449", path: "/gestion-utilisateur" },
     { name: "Gestion des Matières", icon: Book, color: "#B9770E", path: "/" },
     { name: "Gestion des Salles", icon: School, color: "#943126", path: "/" },
-    { name: "Création des Emplois du Temps", icon: Calendar, color: "#76448A", path: "/ajouter-cours" },
+    { name: "Création d'un Cours", icon: Calendar, color: "#76448A", path: "/ajouter-cours" },
     { name: "Visualisation des Emplois du Temps", icon: CalendarSearch, color: "#7D6608", path: "/visualisation-emploi" },
+    { name: "Notifications", icon: Bell, color: "#7D6608", path: "/" },
+    { name: "Paramètres", icon: Settings, color: "#5D6D7E", path: "/settings" },
+    { name: "Se Déconnecter", icon: LogOut, color: "#ff0000", path: "/deconnecter" }
+];
+const SIDEBAR_ITEMS_ENSEIGNANT = [
+    { name: "Tableau de board", icon: LayoutDashboard, color: "#2C3E50", path: "/" },
+    { name: "Visualisation des Emplois du Temps", icon: CalendarSearch, color: "#7D6608", path: "/visualisation-emploi-prof" },
     { name: "Notifications", icon: Bell, color: "#7D6608", path: "/" },
     { name: "Paramètres", icon: Settings, color: "#5D6D7E", path: "/settings" },
     { name: "Se Déconnecter", icon: LogOut, color: "#ff0000", path: "/deconnecter" }
@@ -44,9 +51,9 @@ export default function Sidebar({ user, onLogout }) {
                         )}
                     </motion.button>
                 </div>
-
+                {user.userType === "ADMIN" ? (
                 <nav className="mt-8 flex-grow">
-                    {SIDEBAR_ITEMS.map((item, index) => (
+                    {SIDEBAR_ITEMS_ADMIN.map((item, index) => (
                         item.name === "Se Déconnecter" ? (
                             <div
                                 key={item.path}
@@ -82,6 +89,45 @@ export default function Sidebar({ user, onLogout }) {
                         )
                     ))}
                 </nav>
+                ) : (
+                    <nav className="mt-8 flex-grow">
+                    {SIDEBAR_ITEMS_ENSEIGNANT.map((item, index) => (
+                        item.name === "Se Déconnecter" ? (
+                            <div
+                                key={item.path}
+                                onClick={onLogout}
+                                className="flex items-center p-6 text-sm text-gray-800 font-medium rounded-lg hover:bg-gray-200 transition-colors mb-2 cursor-pointer"
+                            >
+                                <item.icon size={20} style={{ color: item.color, minWidth: "20px" }} />
+                                {isSidebarOpen && (
+                                    <span className="ml-5 whitespace-break-spaces">{item.name}</span>
+                                )}
+                            </div>
+                        ) : (
+                            <Link key={item.path} to={item.path}>
+                                <motion.div
+                                    className="flex items-center p-6 text-sm text-gray-800 font-medium rounded-lg hover:bg-gray-200 transition-colors mb-2"
+                                >
+                                    <item.icon size={20} style={{ color: item.color, minWidth: "20px" }} />
+                                    <AnimatePresence>
+                                        {isSidebarOpen && (
+                                            <motion.span
+                                                className="ml-5 whitespace-break-spaces"
+                                                initial={{ opacity: 0, width: 0 }}
+                                                animate={{ opacity: 1, width: "auto" }}
+                                                exit={{ opacity: 0, width: 0 }}
+                                                transition={{ duration: 0.1, delay: 0.1 }}
+                                            >
+                                                {item.name}
+                                            </motion.span>
+                                        )}
+                                    </AnimatePresence>
+                                </motion.div>
+                            </Link>
+                        )
+                    ))}
+                </nav>
+                )}
             </div>
         </motion.div>
     );
