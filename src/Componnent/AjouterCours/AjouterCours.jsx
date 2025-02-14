@@ -74,32 +74,24 @@ export default function AjouterCours() {
             setLoading(false);
         }
     }
-    const loadUtilisateurs = async () => {
-        setLoading(true);
-        if (nomEnseignant === ""){
-          try {
-            const utilisateursData = await fetchAllUtilisateurs();
-            const enseignants = utilisateursData.filter((utilisateur) => utilisateur.userType !== "ADMIN")
-            setEnseignants(enseignants);
-
-          } catch (err) {
-            setError(err.message);
-          } finally {
-            setLoading(false);
+    const loadUtilisateurs = useCallback(async () => {
+      setLoading(true);
+      try {
+          let utilisateursData;
+          if (nomEnseignant === "") {
+              utilisateursData = await fetchAllUtilisateurs();
+          } else {
+              utilisateursData = await fetchUtilisateursByName(nomEnseignant);
           }
-        }else{
-          try{
-            const utilisateursData = await fetchUtilisateursByName(nomEnseignant)
-            const enseignants = utilisateursData;
-            setEnseignants(enseignants);
-          }catch(err){
-            setError(err.message)
-          }finally{
-            setLoading(false)
-          }
-          
-        }
-      };
+          const enseignants = utilisateursData.filter((utilisateur) => utilisateur.userType !== "ADMIN");
+          setEnseignants(enseignants);
+      } catch (err) {
+          setError(err.message);
+      } finally {
+          setLoading(false);
+      }
+    }, [nomEnseignant]);
+  
 
       const handleSubmit = async(e) => {
         e.preventDefault();
@@ -129,16 +121,14 @@ export default function AjouterCours() {
           setError(err.message)
           setMessage(null)
         }
-        
       }
 
     useEffect(()=>{
-
       loadSalles();
       loadUtilisateurs();
-      loadFormations();
-            
-    },[])
+      loadFormations();      
+    },[loadUtilisateurs])
+
   return (
     <div className='flex-1 overflow-auto relative z-10'>
         <Header title="Ajouter Cours"/>
