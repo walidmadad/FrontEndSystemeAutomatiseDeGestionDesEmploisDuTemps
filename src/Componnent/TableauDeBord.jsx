@@ -18,7 +18,7 @@ export default function TableauDeBord({ user, onLogout }) {
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/visualisation-emploi" element={<AfficherEmplois />} />
-                <Route path="/visualisation-emploi-prof" element={<AfficherEmploisProf />} />
+                <Route path="/visualisation-emploi-prof" element={<AfficherEmploisProf user={user}/>} />
                 <Route path="/gestion-utilisateur" element={<GestionUtilisateur />} />
                 <Route path="/settings/*" element={<Settings user={user} />} />
                 <Route path="/ajouter-cours" element={<AjouterCours/>}/>
