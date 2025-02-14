@@ -172,6 +172,7 @@ export default function AjouterCours() {
                     </label>
                     <select
                       id="enseignant"
+                      value={cours.enseignant.id}
                       onChange={(e) => handleInputChange('enseignant', { id: parseInt(e.target.value, 10) })}
                       className="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                       required
@@ -194,6 +195,7 @@ export default function AjouterCours() {
                     </label>
                     <select
                       id="salle"
+                      value={cours.salle.id}
                       onChange={(e) => handleInputChange('salle', { id: parseInt(e.target.value, 10) })}
                       className="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                       required
@@ -215,6 +217,7 @@ export default function AjouterCours() {
                       Type de Cours :
                     </label>
                     <select id="typeDeCours"
+                      value={cours.typeDeCours}
                       onChange={(e) => handleInputChange('typeDeCours', e.target.value)}
                       className="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="" >
@@ -258,6 +261,7 @@ export default function AjouterCours() {
                     </label>
                     <select
                       id="matiere"
+                      value={cours.matiere.id}
                       onChange={(e) => handleInputChange('matiere', { id: parseInt(e.target.value, 10) })}
                       className="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                       required
