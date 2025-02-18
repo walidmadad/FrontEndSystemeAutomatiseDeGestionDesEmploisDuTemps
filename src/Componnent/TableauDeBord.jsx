@@ -6,6 +6,8 @@ import AfficherEmplois from "./VisualisationEmploi/AfficherEmplois";
 import GestionUtilisateur from "./GestionUtilisateur/GestionUtilisateur";
 import AjouterCours from "./AjouterCours/AjouterCours";
 import AfficherEmploisProf from "./VisualisationEmploi/AfficherEmploisProf";
+import Contrainte from "./Contrainte/Contrainte";
+import AjouterContrainte from "./Contrainte/AjouterContrainte";
 
 export default function TableauDeBord({ user, onLogout }) {
     return (
@@ -22,6 +24,9 @@ export default function TableauDeBord({ user, onLogout }) {
                 <Route path="/gestion-utilisateur" element={<GestionUtilisateur />} />
                 <Route path="/settings/*" element={<Settings user={user} />} />
                 <Route path="/ajouter-cours" element={<AjouterCours/>}/>
+                <Route path="/contraintes" element={<Contrainte/>}/>
+                <Route path="/contraintes/ajouter" element={<AjouterContrainte user={user}/>} />
+                
             </Routes>
         </div>
     );
