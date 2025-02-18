@@ -1,10 +1,28 @@
 import React, { useState } from 'react'
 import Header from '../comon/Header'
 import { Link, Outlet } from 'react-router-dom';
-export default function Contrainte() {
+import { fetchAllContrainteByEnseignant } from '../../api';
+import { useEffect } from 'react';
+export default function Contrainte({id}) {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false)
     const [contraintes, setContarintes] = useState([])
+
+    const loadContraintes = async(id) => {
+      setLoading(true)
+      try {
+        const res = await fetchAllContrainteByEnseignant(id)
+        setContarintes(res.data)
+      }catch (error) {
+        setError(error.message)
+      }finally{
+        setLoading(false)
+      }
+    }
+
+    useEffect(() => {
+      loadContraintes(id);
+    },[id])
 
   return (
     <div className='flex-1 overflow-auto relative z-10'>
@@ -16,7 +34,7 @@ export default function Contrainte() {
           </div>
         )}
         
-        <Link to="ajouter" className="bg-blue-500 py-2 text-white px-3 py-1 mr-10 rounded hover:bg-blue-600 mb-5" >Ajouter une Contraintes</Link>
+        <Link to="ajouter" className="bg-blue-500 py-2 text-white px-3 mr-10 rounded hover:bg-blue-600 mb-5" >Ajouter une Contraintes</Link>
 
         <Outlet />
         <h2 className="text-2xl mt-5 font-bold mb-6">Liste des contraintes</h2>
