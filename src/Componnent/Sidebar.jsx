@@ -1,6 +1,6 @@
-import { Calendar, CalendarSearch, Menu, LayoutDashboard, School, Settings, Users, Bell, Book, LogOut } from "lucide-react";
+import { Calendar, CalendarSearch, Menu, LayoutDashboard, School, Settings, Users, Bell, Book, LogOut, BadgeAlert } from "lucide-react";
 import { useState } from "react";
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, color, motion } from 'framer-motion';
 import { Link } from "react-router";
 
 const SIDEBAR_ITEMS_ADMIN = [
@@ -18,8 +18,9 @@ const SIDEBAR_ITEMS_ENSEIGNANT = [
     { name: "Tableau de board", icon: LayoutDashboard, color: "#2C3E50", path: "/" },
     { name: "Visualisation des Emplois du Temps", icon: CalendarSearch, color: "#7D6608", path: "/visualisation-emploi-prof" },
     { name: "Notifications", icon: Bell, color: "#7D6608", path: "/" },
+    { name: "Contraintes", icon: BadgeAlert, color: "#ff0000", path: "/contraintes" },
     { name: "Paramètres", icon: Settings, color: "#5D6D7E", path: "/settings" },
-    { name: "Se Déconnecter", icon: LogOut, color: "#ff0000", path: "/deconnecter" }
+    { name: "Se Déconnecter", icon: LogOut, color: "#ff0000", path: "/deconnecter" },
 ];
 
 export default function Sidebar({ user, onLogout }) {
