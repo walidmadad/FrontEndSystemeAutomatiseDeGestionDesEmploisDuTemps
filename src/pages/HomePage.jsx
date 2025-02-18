@@ -9,7 +9,7 @@ export default function HomePage() {
 
       <div className=''>
         <motion.div>
-
+          
         </motion.div>
       </div>
     </div>
