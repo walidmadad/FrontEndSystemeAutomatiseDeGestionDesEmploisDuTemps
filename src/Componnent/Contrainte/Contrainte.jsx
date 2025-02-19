@@ -50,6 +50,8 @@ export default function Contrainte({id}) {
                     <th className="border border-gray-300 px-4 py-2">Date</th>
                     <th className="border border-gray-300 px-4 py-2">Début</th>
                     <th className="border border-gray-300 px-4 py-2">Fin</th>
+                    <th className="border border-gray-300 px-4 py-2">Actions</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -57,10 +59,10 @@ export default function Contrainte({id}) {
                     <tr key={contrainte.id} className="hover:bg-gray-50">
                     <td className="border border-gray-300 px-4 py-2">{contrainte?.titre}</td>
                     <td className="border border-gray-300 px-4 py-2">{contrainte?.description || "N/A"}</td>
-                    <td className="border border-gray-300 px-4 py-2">{contrainte?.typeContrainte || "N/A"}</td>
-                    <td className="border border-gray-300 px-4 py-2">{contrainte?.date}</td>
-                    <td className="border border-gray-300 px-4 py-2">{contrainte?.Début || "N/A"}</td>
-                    <td className="border border-gray-300 px-4 py-2">{contrainte?.Fin || "N/A"}</td>
+                    <td className="border border-gray-300 px-4 py-2">{contrainte?.typeContraite || "N/A"}</td>
+                    <td className="border border-gray-300 px-4 py-2">{contrainte?.dateDeContrainte}</td>
+                    <td className="border border-gray-300 px-4 py-2">{contrainte?.dateDebutContrainte || "N/A"}</td>
+                    <td className="border border-gray-300 px-4 py-2">{contrainte?.dateFinContrainte || "N/A"}</td>
                     <td className="border border-gray-300 px-4 py-2">
                         <button className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 mr-2">
                         Modifier
