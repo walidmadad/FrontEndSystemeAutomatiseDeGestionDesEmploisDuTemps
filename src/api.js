@@ -125,3 +125,21 @@ export const fetchAllCoursByEnseignant = async(id) => {
     throw new Error('Erreur lors de la récuperation des cours');
   }
 }
+
+export const fetchAllContrainteByEnseignant = async(id) => {
+  try{
+    const response = await axios.get(`${API_URL}contraintes/enseignant/${id}`);
+    return response.data;
+  }catch(err){
+    throw new Error('Erreur lors de la récuperation des contraintes');
+  }
+}
+
+export const addContrainte = async (contrainte) => {
+  try {
+    const response = await axios.post(`${API_URL}contraintes/add`, contrainte);
+    return response.data
+  } catch (error) {
+    throw new Error('Erreur lors de l"ajout de la contrainte');
+  }
+}

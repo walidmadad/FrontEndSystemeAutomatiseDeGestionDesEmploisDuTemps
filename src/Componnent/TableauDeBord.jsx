@@ -24,7 +24,7 @@ export default function TableauDeBord({ user, onLogout }) {
                 <Route path="/gestion-utilisateur" element={<GestionUtilisateur />} />
                 <Route path="/settings/*" element={<Settings user={user} />} />
                 <Route path="/ajouter-cours" element={<AjouterCours/>}/>
-                <Route path="/contraintes" element={<Contrainte/>}/>
+                <Route path="/contraintes" element={<Contrainte id={user.id}/>}/>
                 <Route path="/contraintes/ajouter" element={<AjouterContrainte user={user}/>} />
                 
             </Routes>
