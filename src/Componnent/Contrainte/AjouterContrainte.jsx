@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import Header from '../comon/Header'
+import { addContrainte } from '../../api'
 
 export default function AjouterContrainte({user}) {
 
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const [contrainte, setContarinte] = useState({
     enseignant: user,
     titre: "",
@@ -22,19 +24,35 @@ export default function AjouterContrainte({user}) {
         }
       })
   }
-  const handleSubmit = () => {
-    
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    try {
+      const data = await addContrainte(contrainte);
+      setMessage(data.message);
+      setError(null);
+      setContarinte(
+        {
+          enseignant: user,
+          titre: "",
+          typeContraite: "",
+          description: "",
+          dateDeContrainte: "",
+          dateDebutContrainte: "",
+          dateFinContrainte: "",
+        }
+      )
+    } catch (error) {
+      setError(error.message);
+      setMessage(null)
+    }
   }
 
   return (
     <div className='flex-1 overflow-auto relative z-10'>
             <Header title="Ajouter "/>
             <main className="max-w-7xl mx-auto py-6 px-2 lg:px-2 xl:px-5">
-            {error && (
-              <div className="bg-red-100 text-red-700 p-4 rounded mb-4">
-                <p>Erreur : {error}</p>
-              </div>
-            )}
+            {error && <div className="bg-red-100 text-red-700 p-4 rounded mb-4">Erreur : {error}</div>}
+            {message && <div className="bg-green-100 text-green-700 p-4 rounded mb-4">{message}</div>}
             </main>
             <form
                 className="bg-white shadow-lg rounded-lg p-6 max-w-3xl mx-auto border border-gray-200"
@@ -43,7 +61,7 @@ export default function AjouterContrainte({user}) {
                 <div className="grid grid-cols-1 gap-6">
                   {/* Titre */}
                   <div>
-                    <label htmlFor="nom" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="titre" className="block text-sm font-medium text-gray-700">
                       Titre :
                     </label>
                     <input
