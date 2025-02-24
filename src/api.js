@@ -7,10 +7,12 @@ export const verifierConnexion = async (email, motDePasse, userType) => {
         const response = await axios.get(`${API_URL}utilisateurs/verify`, {
             params: { email, motDePasse, userType },
         });
+        console.log(response.data)
         return response.data; // Retourne les données si la requête est réussie
     } catch (error) {
         if (error.response) {
             // Gestion des erreurs côté backend
+            console.log(error.response.data);
             return error.response.data;
         }
         throw new Error('Erreur de connexion au serveur.');
