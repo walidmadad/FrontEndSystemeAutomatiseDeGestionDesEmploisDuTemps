@@ -7,10 +7,12 @@ export const verifierConnexion = async (email, motDePasse, userType) => {
         const response = await axios.get(`${API_URL}utilisateurs/verify`, {
             params: { email, motDePasse, userType },
         });
+        console.log(response.data)
         return response.data; // Retourne les données si la requête est réussie
     } catch (error) {
         if (error.response) {
             // Gestion des erreurs côté backend
+            console.log(error.response.data);
             return error.response.data;
         }
         throw new Error('Erreur de connexion au serveur.');
@@ -120,6 +122,7 @@ export const addCours = async (cours) => {
 export const fetchAllCoursByEnseignant = async(id) => {
   try{
     const response = await axios.get(`${API_URL}cours/coursByEnseignant/${id}`);
+    console.log(response.data)
     return response.data.data;
   }catch(err){
     throw new Error('Erreur lors de la récuperation des cours');
@@ -129,6 +132,14 @@ export const fetchAllCoursByEnseignant = async(id) => {
 export const fetchAllContrainteByEnseignant = async(id) => {
   try{
     const response = await axios.get(`${API_URL}contraintes/enseignant/${id}`);
+    return response.data;
+  }catch(err){
+    throw new Error('Erreur lors de la récuperation des contraintes');
+  }
+}
+export const fetchAllContrainte = async() => {
+  try{
+    const response = await axios.get(`${API_URL}contraintes/all`);
     return response.data;
   }catch(err){
     throw new Error('Erreur lors de la récuperation des contraintes');
