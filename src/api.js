@@ -64,6 +64,15 @@ export const updateEnseignant = async (id, utilisateur) => {
       throw new Error('Erreur lors de la mise à jour de l\'enseignant.');
     }
   };
+
+  export const updateAdmin = async (id, utilisateur) => {
+    try {
+      const response = await axios.put(`${API_URL}utilisateurs/admin/update/${id}`, utilisateur);
+      return response.data;
+    } catch (error) {
+      throw new Error('Erreur lors de la mise à jour de l\'admin.');
+    }
+  };
   
 export const deleteUtilisateur = async (id) => {
     try {
@@ -152,5 +161,32 @@ export const addContrainte = async (contrainte) => {
     return response.data
   } catch (error) {
     throw new Error('Erreur lors de l"ajout de la contrainte');
+  }
+}
+
+export const fetchAllNotificationsById = async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}notifications/notification/${id}`);
+    return response.data.data;
+  } catch (error) {
+    throw new Error('Erreur lors de la récupération des notifications.');
+  }
+};
+
+export const fetchAllNotifications = async () => {
+  try {
+    const response = await axios.get(`${API_URL}notifications/notification/all`);
+    return response.data.data;
+  } catch (error) {
+    throw new Error('Erreur lors de la récupération des notifications.');
+  }
+}
+
+export const updateNotification = async (id) => {
+  try {
+    const response = await axios.put(`${API_URL}notifications/notification/update/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Erreur lors de la mise à jour de la notification.');
   }
 }

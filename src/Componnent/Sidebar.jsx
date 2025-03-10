@@ -1,24 +1,23 @@
-import { Calendar, CalendarSearch, Menu, LayoutDashboard, School, Settings, Users, Bell, Book, LogOut, BadgeAlert } from "lucide-react";
+import { CalendarSearch, Menu, LayoutDashboard, Settings, Users, Bell, LogOut, BadgeAlert, CalendarPlus } from "lucide-react";
 import { useState } from "react";
-import { AnimatePresence, color, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Link } from "react-router";
 
 const SIDEBAR_ITEMS_ADMIN = [
     { name: "Tableau de board", icon: LayoutDashboard, color: "#2C3E50", path: "/" },
     { name: "Gestion des Utilisateurs", icon: Users, color: "#1E8449", path: "/gestion-utilisateur" },
-    { name: "Gestion des Matières", icon: Book, color: "#B9770E", path: "/" },
-    { name: "Gestion des Salles", icon: School, color: "#943126", path: "/" },
-    { name: "Création d'un Cours", icon: Calendar, color: "#76448A", path: "/ajouter-cours" },
+    { name: "Création d'un Cours", icon: CalendarPlus, color: "#76448A", path: "/ajouter-cours" },
     { name: "Visualisation des Emplois du Temps", icon: CalendarSearch, color: "#7D6608", path: "/visualisation-emploi" },
-    { name: "Notifications", icon: Bell, color: "#7D6608", path: "/" },
+    { name: "Liste des contraintes", icon: BadgeAlert, color: "#B9770E", path: "/all-contraintes" },
+    { name: "Notification", icon: Bell, color: "#7D6608", path: "/notification" },
     { name: "Paramètres", icon: Settings, color: "#5D6D7E", path: "/settings" },
     { name: "Se Déconnecter", icon: LogOut, color: "#ff0000", path: "/deconnecter" }
 ];
 const SIDEBAR_ITEMS_ENSEIGNANT = [
     { name: "Tableau de board", icon: LayoutDashboard, color: "#2C3E50", path: "/" },
-    { name: "Visualisation des Emplois du Temps", icon: CalendarSearch, color: "#7D6608", path: "/visualisation-emploi-prof" },
-    { name: "Notifications", icon: Bell, color: "#7D6608", path: "/" },
+    { name: "Visualisez Votre Emplois du Temps", icon: CalendarSearch, color: "#7D6608", path: "/visualisation-emploi-prof" },
     { name: "Contraintes", icon: BadgeAlert, color: "#ff0000", path: "/contraintes" },
+    { name: "Notification", icon: Bell, color: "#7D6608", path: "/notification" },
     { name: "Paramètres", icon: Settings, color: "#5D6D7E", path: "/settings" },
     { name: "Se Déconnecter", icon: LogOut, color: "#ff0000", path: "/deconnecter" },
 ];

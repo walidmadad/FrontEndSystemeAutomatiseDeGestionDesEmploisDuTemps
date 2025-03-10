@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../comon/Header';
 import {  addAdmin,addEnseignant, deleteUtilisateur, fetchAllUtilisateurs, fetchAllDepartements } from '../../api';
+import { UsersIcon } from 'lucide-react';
 
 export default function GestionUtilisateur() {
   const [utilisateurs, setUtilisateurs] = useState([]);
@@ -105,8 +106,8 @@ export default function GestionUtilisateur() {
   }, []);
 
   return (
-    <div className='flex-1 overflow-auto relative z-10'>
-      <Header title="Gestion des Utilisateurs" />
+    <div className='flex-1 overflow-auto relative z-10 bg-gray-100 min-h-screen'>
+      <Header title="Gestion des Utilisateurs" icon={UsersIcon}/>
 
       <main className="max-w-7xl mx-auto py-6 px-2 lg:px-2 xl:px-5">
         {error && (

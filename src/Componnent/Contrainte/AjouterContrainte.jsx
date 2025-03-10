@@ -9,7 +9,7 @@ export default function AjouterContrainte({user}) {
   const [contrainte, setContarinte] = useState({
     enseignant: user,
     titre: "",
-    typeContraite: "",
+    typeContrainte: "",
     description: "",
     dateDeContrainte: "",
     dateDebutContrainte: "",
@@ -34,7 +34,7 @@ export default function AjouterContrainte({user}) {
         {
           enseignant: user,
           titre: "",
-          typeContraite: "",
+          typeContrainte: "",
           description: "",
           dateDeContrainte: "",
           dateDebutContrainte: "",
@@ -48,7 +48,7 @@ export default function AjouterContrainte({user}) {
   }
 
   return (
-    <div className='flex-1 overflow-auto relative z-10'>
+    <div className='flex-1 overflow-auto relative z-10 bg-gray-100 min-h-screen'>
             <Header title="Ajouter "/>
             <main className="max-w-7xl mx-auto py-6 px-2 lg:px-2 xl:px-5">
             {error && <div className="bg-red-100 text-red-700 p-4 rounded mb-4">Erreur : {error}</div>}
@@ -83,8 +83,8 @@ export default function AjouterContrainte({user}) {
                     <input
                       id="typeContraite"
                       type="text"
-                      value={contrainte.typeContraite}
-                      onChange={(e) => handleInputChange('typeContraite', e.target.value)}
+                      value={contrainte.typeContrainte}
+                      onChange={(e) => handleInputChange('typeContrainte', e.target.value)}
                       placeholder="Entrez votre prénom"
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                       required
