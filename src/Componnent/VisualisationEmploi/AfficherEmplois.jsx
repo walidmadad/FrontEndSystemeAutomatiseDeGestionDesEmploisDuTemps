@@ -4,6 +4,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css'; // Styles du calendrier
 import { fetchAllCoursByEnseignant, fetchAllUtilisateurs, fetchUtilisateursByName } from '../../api';
+import { CalendarSearchIcon } from 'lucide-react';
 
 // Initialisation de moment pour la localisation des dates
 const localizer = momentLocalizer(moment);
@@ -16,7 +17,6 @@ export default function AfficherEmplois() {
   const [cours, setCours] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [message, setMessage] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
 
@@ -95,7 +95,8 @@ export default function AfficherEmplois() {
   return (
     <div className="flex-1 overflow-auto relative z-10 bg-gray-100 min-h-screen">
       {/* Header */}
-      <Header title="Visualisation des Emplois du Temps" />
+      <Header title="Visualisation des Emplois du Temps" icon={CalendarSearchIcon}/>
+      {error && <div className="bg-red-100 text-red-700 p-4 rounded mb-4">Erreur : {error}</div>}
 
       <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8 xl:px-20">
         {/* Enseignant */}
