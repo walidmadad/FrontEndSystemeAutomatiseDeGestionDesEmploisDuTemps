@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import Header from '../comon/Header'
 import { fetchAllSalles, fetchAllUtilisateurs, fetchAllFormations, fetchAllMatieres, fetchUtilisateursByName, addCours } from '../../api';
+import { CalendarPlus } from 'lucide-react';
 
 export default function AjouterCours() {
     const [enseignants, setEnseignants] = useState([]);
@@ -84,6 +85,7 @@ export default function AjouterCours() {
               utilisateursData = await fetchUtilisateursByName(nomEnseignant);
           }
           const enseignants = utilisateursData.filter((utilisateur) => utilisateur.userType !== "ADMIN");
+          
           setEnseignants(enseignants);
       } catch (err) {
           setError(err.message);
@@ -130,9 +132,9 @@ export default function AjouterCours() {
     },[loadUtilisateurs])
 
   return (
-    <div className='flex-1 overflow-auto relative z-10'>
-        <Header title="Ajouter Cours"/>
-        <div className="bg-white shadow-lg rounded-lg p-6 max-w-3xl mx-auto border border-gray-200">
+    <div className='flex-1 overflow-auto relative z-10 bg-gray-100 min-h-screen'>
+        <Header title="Ajouter Cours" icon={CalendarPlus}/>
+        <div className="bg-white shadow-lg rounded-lg p-6 max-w-3xl mx-auto border border-gray-200 mt-5">
                 {error && <div className="bg-red-100 text-red-700 p-4 rounded mb-4">Erreur : {error}</div>}
                 {message && <div className="bg-green-100 text-green-700 p-4 rounded mb-4">{message}</div>}
                 {loading ? (
