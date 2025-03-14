@@ -7,12 +7,10 @@ export const verifierConnexion = async (email, motDePasse, userType) => {
         const response = await axios.get(`${API_URL}utilisateurs/verify`, {
             params: { email, motDePasse, userType },
         });
-        console.log(response.data)
         return response.data; // Retourne les données si la requête est réussie
     } catch (error) {
         if (error.response) {
             // Gestion des erreurs côté backend
-            console.log(error.response.data);
             return error.response.data;
         }
         throw new Error('Erreur de connexion au serveur.');
@@ -38,7 +36,6 @@ export const fetchUtilisateursByName = async (name) => {
   
 export const addAdmin = async (admin) => {
     try {
-      console.log(admin)
       const response = await axios.post(`${API_URL}utilisateurs/admin/add`, admin);
       return response.data;
     } catch (error) {
@@ -48,7 +45,6 @@ export const addAdmin = async (admin) => {
   
 export const addEnseignant = async (enseignant) => {
     try {
-      console.log(enseignant)
       const response = await axios.post(`${API_URL}utilisateurs/enseignant/add`, enseignant);
       return response.data;
     } catch (error) {
@@ -131,10 +127,18 @@ export const addCours = async (cours) => {
 export const fetchAllCoursByEnseignant = async(id) => {
   try{
     const response = await axios.get(`${API_URL}cours/coursByEnseignant/${id}`);
-    console.log(response.data)
     return response.data.data;
   }catch(err){
     throw new Error('Erreur lors de la récuperation des cours');
+  }
+}
+
+export const deleteCours = async (id) => {
+  try {
+    const response = await axios.delete(`${API_URL}cours/delete/${id}`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Erreur lors de la suppression du cours.');
   }
 }
 
