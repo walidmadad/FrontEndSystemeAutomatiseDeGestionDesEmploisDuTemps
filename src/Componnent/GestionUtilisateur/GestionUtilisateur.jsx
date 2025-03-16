@@ -148,7 +148,7 @@ export default function GestionUtilisateur() {
                     <th className="border border-gray-300 px-4 py-2">Télephone</th>
                     <th className="border border-gray-300 px-4 py-2">Département</th>
                     <th className="border border-gray-300 px-4 py-2">Type d'Utilisateur</th>
-                    <th className="border border-gray-300 px-4 py-2">Actions</th>
+                    {/*<th className="border border-gray-300 px-4 py-2">Actions</th>*/}
                 </tr>
                 </thead>
                 <tbody>
@@ -162,17 +162,14 @@ export default function GestionUtilisateur() {
                     <td className="border border-gray-300 px-4 py-2">{utilisateur.departement?.nom || "N/A"}</td>
                     <td className="border border-gray-300 px-4 py-2">{utilisateur.userType}</td>
 
-
+                    {/*}
                     <td className="border border-gray-300 px-4 py-2">
-                        <button className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 mr-2">
-                        Modifier
-                        </button>
                         <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
                         onClick={() => handleDelete(utilisateur.id)} // ID fictif
                         disabled={loading}>
                         Supprimer
                         </button>
-                    </td>
+                    </td>*/}
                     </tr>
                 ))}
                 </tbody>
